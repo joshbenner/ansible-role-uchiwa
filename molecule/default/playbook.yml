@@ -1,0 +1,20 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  roles:
+    - role: joshbenner.sensu
+      sensu_enable_server: yes
+      sensu_enable_api: yes
+      sensu_plugin_dependencies: []
+    - role: ../../..
+      uchiwa_datacenters:
+        - name: Site 1
+          host: localhost
+          port: 4567
+      uchiwa_authentication:
+        users:
+          - username: admin
+            password: admin
+            accessToken: 123456
+            readonly: false

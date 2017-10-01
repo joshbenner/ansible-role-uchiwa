@@ -1,0 +1,68 @@
+---
+# tasks file for uchiwa
+- name: Gather variables for each operating system
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+    - "{{ ansible_distribution | lower }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+
+- name: Make sure APT can do SSL
+  apt:
+    name: apt-transport-https
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Add Uchiwa APT GPG key
+  apt_key:
+    url: "{{ uchiwa_apt_key }}"
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Add Uchiwa APT repository
+  apt_repository:
+    repo: "{{ uchiwa_apt_repo }}"
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Add Uchiwa YUM repository
+  yum_repository:
+    name: sensu
+    description: Sensu
+    file: sensu
+    baseurl: "{{ uchiwa_redhat_repo_url }}"
+    gpgcheck: no
+    enabled: yes
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: Install Uchiwa
+  package:
+    name: "{{ _uchiwa_package }}"
+    state: present
+
+- name: Write Uchiwa configs
+  copy:
+    dest: "{{ uchiwa_config_file }}"
+    content: "{{ _uchiwa_config | to_nice_json }}"
+    owner: "{{ uchiwa_user }}"
+    group: "{{ uchiwa_group }}"
+    mode: 0600
+  notify: restart uchiwa
+
+- name: Write Uchiwa authentication config
+  copy:
+    dest: "{{ uchiwa_config_dir }}/auth.json"
+    content: "{{ _uchiwa_auth_config | to_nice_json }}"
+    owner: "{{ uchiwa_user }}"
+    group: "{{ uchiwa_group }}"
+    mode: 0600
+  notify: restart uchiwa
+
+- name: Ensure Uchiwa is running and enabled
+  service:
+    name: uchiwa
+    state: started
+    enabled: yes

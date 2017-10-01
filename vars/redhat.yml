@@ -1,0 +1,2 @@
+---
+_uchiwa_package: "uchiwa{{ ('-' + uchiwa_version) if uchiwa_version|length else '' }}"

@@ -1,0 +1,13 @@
+---
+_uchiwa_config:
+  sensu: "{{ uchiwa_datacenters }}"
+  uchiwa:
+    host: "{{ uchiwa_host }}"
+    port: "{{ uchiwa_port }}"
+    ssl: "{{ uchiwa_ssl }}"
+    loglevel: "{{ uchiwa_loglevel }}"
+    refresh: "{{ uchiwa_refresh }}"
+    users_options: "{{ uchiwa_users_options }}"
+
+_uchiwa_auth_config:
+  uchiwa: "{{ uchiwa_authentication }}"

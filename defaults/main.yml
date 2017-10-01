@@ -1,0 +1,49 @@
+---
+# defaults file for uchiwa
+
+uchiwa_apt_key: https://sensu.global.ssl.fastly.net/apt/pubkey.gpg
+uchiwa_apt_repo: deb https://sensu.global.ssl.fastly.net/apt {{ ansible_distribution_release }} main
+uchiwa_redhat_repo_url: https://sensu.global.ssl.fastly.net/yum/$releasever/$basearch/
+uchiwa_version: ""
+uchiwa_config_file: /etc/sensu/uchiwa.json
+uchiwa_config_dir: /etc/sensu/dashboard.d
+
+uchiwa_user: uchiwa
+uchiwa_group: uchiwa
+
+uchiwa_datacenters: []
+# - name: Site 1
+#   host: api1.example.com
+#   port: 4567
+
+uchiwa_host: 0.0.0.0
+uchiwa_port: 3000
+# trace, debug, info, warn, fatal
+uchiwa_loglevel: info
+uchiwa_refresh: 10
+
+uchiwa_authentication: {}
+# users:
+#   - username: admin
+#     password: sekrit
+#     accessToken: someLongString
+#     readonly: false
+# user: admin
+# pass: sekrit
+# auth:
+#   privatekey: /path/to/uchiwa.rsa
+#   publickey: /path/to/uchiwa.rsa.pub
+
+uchiwa_ssl: {}
+# certfile: /path/to/uchiwa.pem
+# keyfile: /path/to/uchiwa.key
+
+uchiwa_users_options:
+  dateFormat: YYYY-MM-DD HH:mm:ss
+  defaultTheme: uchiwa-default
+  disableNoExpiration: false
+  requireSilencingReason: false
+  silenceDurations:
+    - 0.25
+    - 1
+    - 24
