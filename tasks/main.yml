@@ -38,7 +38,7 @@
     state: present
   when: ansible_os_family == 'RedHat'
 
-- name: Install Uchiwa (APT)
+- name: Install Uchiwa
   package:
     name: "{{ _uchiwa_package }}"
     state: present
