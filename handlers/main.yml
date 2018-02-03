@@ -1,5 +1,10 @@
 ---
 # handlers file for uchiwa
+- name: uchiwa daemon-reload
+  systemd:
+    daemon_reload: yes
+  when: ansible_service_mgr == 'systemd'
+
 - name: restart uchiwa
   service:
     name: uchiwa

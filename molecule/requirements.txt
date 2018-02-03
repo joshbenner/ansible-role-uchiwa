@@ -1,4 +1,2 @@
-ansible<2.4
-molecule<2.2
-testinfra>=1.7
+molecule
 docker-py

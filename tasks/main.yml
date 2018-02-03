@@ -38,10 +38,13 @@
     state: present
   when: ansible_os_family == 'RedHat'
 
-- name: Install Uchiwa
+- name: Install Uchiwa (APT)
   package:
     name: "{{ _uchiwa_package }}"
     state: present
+  notify:
+    - uchiwa daemon-reload
+    - restart uchiwa
 
 - name: Write Uchiwa configs
   copy:
