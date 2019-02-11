@@ -7,7 +7,7 @@ _uchiwa_config:
     ssl: "{{ uchiwa_ssl }}"
     loglevel: "{{ uchiwa_loglevel }}"
     refresh: "{{ uchiwa_refresh }}"
-    users_options: "{{ uchiwa_users_options }}"
+    usersOptions: "{{ uchiwa_users_options }}"
 
 _uchiwa_auth_config:
   uchiwa: "{{ uchiwa_authentication }}"
